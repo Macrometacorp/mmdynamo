@@ -1,5 +1,5 @@
 # mmDynamo
-Macrometa DynamoDB client for CloudFlare workers.
+Macrometa DynamoDB client for CloudFlare & Edge Workers.
 
 ## Initializing dynamodb
 
