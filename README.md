@@ -17,7 +17,7 @@ const client = new DynamoC8({
 
 ```js
 client
-  .createTable({})
+  .createTable({...})
   .then(response => {
     return response.json()
   })
@@ -30,7 +30,7 @@ client
 
 ```js
 client
-  .describeTable({})
+  .describeTable({...})
   .then(response => {
     return response.json()
   })
@@ -43,7 +43,7 @@ client
 
 ```js
 client
-  .describeTimeToLive({})
+  .describeTimeToLive({...})
   .then(response => {
     return response.json()
   })
@@ -64,7 +64,7 @@ client.listTables().then(res => {
 
 ```js
 client
-  .putItem({})
+  .putItem({...})
   .then(response => {
     return response.json()
   })
@@ -77,7 +77,7 @@ client
 
 ```js
 client
-  .getItem({})
+  .getItem({...})
   .then(response => {
     return response.json()
   })
@@ -90,7 +90,7 @@ client
 
 ```js
 client
-  .deleteItem({})
+  .deleteItem({...})
   .then(response => {
     return response.json()
   })
@@ -103,7 +103,7 @@ client
 
 ```js
 client
-  .deleteTable({})
+  .deleteTable({...})
   .then(response => {
     return response.json()
   })
@@ -116,7 +116,7 @@ client
 
 ```js
 client
-  .createGlobalTable({})
+  .createGlobalTable({...})
   .then(response => {
     return response.json()
   })
@@ -129,7 +129,7 @@ client
 
 ```js
 client
-  .createGlobalTable({})
+  .createGlobalTable({...})
   .then(response => {
     return response.json()
   })
