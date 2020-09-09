@@ -1,9 +1,18 @@
 # mmDynamo
-Macrometa DynamoDB client for CloudFlare workers.
+Macrometa DynamoDB client for CloudFlare & Edge Workers.
+
+## Install
+```
+npm install mmdynamo
+```
 
 ## Initializing dynamodb
 
 ```js
+const DynamoC8 = require('mmdynamo')
+OR
+import DynamoC8 from'mmdynamo'
+
 const client = new DynamoC8({
   region: 'us-east-2',
   accessKeyId: '',
