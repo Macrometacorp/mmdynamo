@@ -22,59 +22,36 @@
     "http",
     "rest"
   ],
-  "main": "lib/index.js",
-  "typings": "lib/cjs/mmdynamo.d.ts",
-  "browser": {
-    "./lib/index.js": "./lib/cjs/index.js"
-  },
+  "main": "dist/mmdynamo.cjs.js",
+  "module": "dist/mmdynamo.esm.js",
+  "browser": "dist/mmdynamo.umd.js",
+  "types": "dist/main.d.ts",
   "files": [
-    "lib/*.*",
-    "lib/async/*.*",
-    "lib/async/util/*.*",
-    "lib/cjs/*.*",
-    "lib/cjs/util/*.*"
+    "dist"
   ],
   "scripts": {
-    "pretest": "npm run dist",
-    "test": "mocha --timeout 60000 --growl --reporter mochawesome --require source-map-support/register lib/async/test",
-    "ci": "mocha --reporter spec --require source-map-support/register --timeout 10000 lib/cjs/test",
-    "preci": "yarn install",
-    "jenkins": "yarn ci -- --timeout 0 --reporter xunit-file",
-    "dist:cjs": "tsc -p . --outDir ./lib/cjs/ --declarationMap true && cpy src/index.js lib/cjs/ && cpy src/test/mockFiles lib/async/test/mockFiles",
-    "dist:async": "tsc -p . --outDir ./lib/async/ --target es2018 --declarationMap true && cpy src/index.js lib/async/ && cpy src/test/mockFiles lib/async/test/mockFiles",
-    "dist:web": "webpack",
-    "dist": "rimraf lib && npm-run-all --parallel dist:* && cpy src/index.all.js --rename index.js lib/",
-    "prepare": "npm run dist && node -e 'require(\".\");'",
-    "predevTest": "npm run dist"
+    "declaration": "tsc -p declaration.tsconfig.json",
+    "build": "npm run declaration && rollup -c",
+    "prepare": "npm run build",
+    "lint": "eslint .",
+    "test": "node test/test.js",
+    "integration": "node test/integration.js"
+  },
+  "devDependencies": {
+    "@rollup/plugin-json": "^4.1.0",
+    "@rollup/plugin-node-resolve": "^9.0.0",
+    "eslint": "^7.8.1",
+    "eslint-config-standard": "^14.1.1",
+    "eslint-plugin-import": "^2.22.0",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.0.1",
+    "puppeteer": "^5.2.1",
+    "rollup": "^2.26.9",
+    "rollup-plugin-cleanup": "^3.1.1",
+    "typescript": "^4.0.2"
   },
   "dependencies": {
     "aws4fetch": "^1.0.12"
-  },
-  "devDependencies": {
-    "@types/chai": "^4.0.10",
-    "@types/mocha": "^5.2.1",
-    "babel-core": "^6.26.0",
-    "babel-eslint": "^8.0.3",
-    "babel-loader": "^7.1.2",
-    "babel-plugin-transform-class-properties": "^6.24.1",
-    "babel-plugin-transform-object-rest-spread": "^6.26.0",
-    "babel-preset-env": "^1.6.1",
-    "chai": "^4.0.2",
-    "cpy-cli": "^2.0.0",
-    "eslint": "^4.13.0",
-    "eslint-config-prettier": "^2.9.0",
-    "eslint-plugin-prettier": "^2.3.1",
-    "mocha": "^5.2.0",
-    "mochawesome": "^4.1.0",
-    "npm-run-all": "^4.1.5",
-    "prettier": "^1.9.1",
-    "regenerator-runtime": "^0.11.1",
-    "rimraf": "^2.6.2",
-    "source-map-support": "^0.5.0",
-    "ts-loader": "^3.2.0",
-    "typescript": "^2.6.2",
-    "webpack": "^3.0.0",
-    "xunit-file": "^1.0.0",
-    "yarn": "^1.10.1"
   }
 }
