@@ -1,7 +1,9 @@
 # mmDynamo
+
 Macrometa DynamoDB client for CloudFlare & Edge Workers.
 
 ## Install
+
 ```
 npm install mmdynamo
 ```
@@ -9,17 +11,15 @@ npm install mmdynamo
 ## Initializing dynamodb
 
 ```js
-const DynamoC8 = require('mmdynamo')
-OR
-import DynamoC8 from'mmdynamo'
+import { MMDynamo } from "mmdynamo";
 
-const client = new DynamoC8({
-  region: 'us-east-2',
-  accessKeyId: '',
-  secretAccessKey: '',
-  service: 'dynamodb',
-  endpoint: 'http://dynamodb.us-east-2.amazonaws.com',
-})
+const client = new MMDynamo({
+  region: "us-east-2",
+  accessKeyId: "",
+  secretAccessKey: "",
+  service: "dynamodb",
+  endpoint: "http://dynamodb.us-east-2.amazonaws.com",
+});
 ```
 
 ### Create Table
@@ -64,9 +64,9 @@ client
 ### List Tables
 
 ```js
-client.listTables().then(res => {
-  return res.json()
-})
+client.listTables().then((res) => {
+  return res.json();
+});
 ```
 
 ### Put Item
@@ -152,11 +152,10 @@ client
 ```js
 client
   .listGlobalTables()
-  .then(response => {
-    return response.json()
+  .then((response) => {
+    return response.json();
   })
-  .then(data => {
-    console.log(data)
-  })
+  .then((data) => {
+    console.log(data);
+  });
 ```
-
