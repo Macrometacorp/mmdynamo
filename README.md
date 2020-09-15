@@ -2,11 +2,27 @@
 
 Macrometa DynamoDB client for CloudFlare & Edge Workers.
 
-## Install
+## Installation
+
+With [npm](http://npmjs.org/) do:
 
 ```
 npm install mmdynamo
 ```
+
+Or you can also reference different formats straight from unpkg.com:
+
+[ES Modules](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import):
+
+https://unpkg.com/mmdynamo@0.1.0/dist/mmdynamo.esm.js
+
+[UMD](https://github.com/umdjs/umd):
+
+https://unpkg.com/mmdynamo@0.1.0/dist/mmdynamo.umd.js
+
+[CommonJS](https://requirejs.org/docs/commonjs.html):
+
+https://unpkg.com/mmdynamo@0.1.0/dist/mmdynamo.cjs.js
 
 ## Initializing dynamodb
 
