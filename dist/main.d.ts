@@ -1,4 +1,4 @@
-export class MMDynamo {
+export class DynamoDB {
     constructor({ endpoint, ...config }: {
         accessKeyId: string;
         secretAccessKey: string;
@@ -19,5 +19,5 @@ export class MMDynamo {
         lowerFirst: (string: any) => any;
     };
     defineMethods(): void;
-    _call(target: any, params: any): any;
+    _call(target: any, params: any, cb: any): any;
 }

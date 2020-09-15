@@ -5895,7 +5895,7 @@ var dynamoApi = {
 	documentation: documentation
 };
 
-class MMDynamo {
+class DynamoDB {
   constructor({ endpoint, ...config }) {
     this._client = new AwsClient(config);
     this._endpoint = endpoint;
@@ -5931,14 +5931,17 @@ class MMDynamo {
       if (svc[lowerCase]) return;
       var operation = operations[method];
       if (operation.authtype === "none") ; else {
-        svc[lowerCase] = (params) => {
+        svc[lowerCase] = (params, cb) => {
           params = params || {};
-          return this._call(method, params);
+          if (!cb) {
+            throw new Error("Callback not provided");
+          }
+          return this._call(method, params, cb);
         };
       }
     });
   }
-  _call(target, params) {
+  _call(target, params, cb) {
     const operation = dynamoApi.operations[target];
     let headers = {};
     headers["Content-Type"] =
@@ -5950,12 +5953,35 @@ class MMDynamo {
       throw new Error(`Target Function: ${target} not found`);
     }
     headers["X-Amz-Target"] = XAmzTarget;
-    return this._client.fetch(this._endpoint + operation.http.requestUri, {
-      body: JSON.stringify(params),
-      headers,
-      method: operation.http.method,
-    });
+    const handleResponse = (text) => {
+      try {
+        return JSON.parse(text);
+      } catch (err) {
+        return text;
+      }
+    };
+    return this._client
+      .fetch(this._endpoint + operation.http.requestUri, {
+        body: JSON.stringify(params),
+        headers,
+        method: operation.http.method,
+      })
+      .then((response) => {
+        return new Promise((resolve, reject) => {
+          response.text().then((text) => {
+            if (response.ok) {
+              resolve(handleResponse(text));
+            } else {
+              reject(handleResponse(text));
+            }
+          });
+        });
+      })
+      .then((data) => {
+        cb(null, data);
+      })
+      .catch((err) => cb(err, null));
   }
 }
 
-export { MMDynamo };
+export { DynamoDB };

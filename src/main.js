@@ -1,7 +1,7 @@
 import { AwsClient } from "aws4fetch";
 import dynamoApi from "./apis/dynamodb-2012-08-10.normal.json";
 
-export class MMDynamo {
+export class DynamoDB {
   /**
    * @param {{
    *   accessKeyId: string
@@ -55,15 +55,18 @@ export class MMDynamo {
       if (operation.authtype === "none") {
         // Provision to make unauthenticated request
       } else {
-        svc[lowerCase] = (params) => {
+        svc[lowerCase] = (params, cb) => {
           params = params || {};
-          return this._call(method, params);
+          if (!cb) {
+            throw new Error("Callback not provided");
+          }
+          return this._call(method, params, cb);
         };
       }
     });
   }
 
-  _call(target, params) {
+  _call(target, params, cb) {
     const operation = dynamoApi.operations[target];
     let headers = {};
 
@@ -80,10 +83,34 @@ export class MMDynamo {
 
     headers["X-Amz-Target"] = XAmzTarget;
 
-    return this._client.fetch(this._endpoint + operation.http.requestUri, {
-      body: JSON.stringify(params),
-      headers,
-      method: operation.http.method,
-    });
+    const handleResponse = (text) => {
+      try {
+        return JSON.parse(text);
+      } catch (err) {
+        return text;
+      }
+    };
+
+    return this._client
+      .fetch(this._endpoint + operation.http.requestUri, {
+        body: JSON.stringify(params),
+        headers,
+        method: operation.http.method,
+      })
+      .then((response) => {
+        return new Promise((resolve, reject) => {
+          response.text().then((text) => {
+            if (response.ok) {
+              resolve(handleResponse(text));
+            } else {
+              reject(handleResponse(text));
+            }
+          });
+        });
+      })
+      .then((data) => {
+        cb(null, data);
+      })
+      .catch((err) => cb(err, null));
   }
 }

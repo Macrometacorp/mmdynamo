@@ -14,22 +14,22 @@ Or you can also reference different formats straight from unpkg.com:
 
 [ES Modules](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import):
 
-https://unpkg.com/mmdynamo@0.1.0/dist/mmdynamo.esm.js
+https://unpkg.com/mmdynamo@0.2.0/dist/mmdynamo.esm.js
 
 [UMD](https://github.com/umdjs/umd):
 
-https://unpkg.com/mmdynamo@0.1.0/dist/mmdynamo.umd.js
+https://unpkg.com/mmdynamo@0.2.0/dist/mmdynamo.umd.js
 
 [CommonJS](https://requirejs.org/docs/commonjs.html):
 
-https://unpkg.com/mmdynamo@0.1.0/dist/mmdynamo.cjs.js
+https://unpkg.com/mmdynamo@0.2.0/dist/mmdynamo.cjs.js
 
 ## Initializing dynamodb
 
 ```js
-import { MMDynamo } from "mmdynamo";
+import { DynamoDB } from "mmdynamo";
 
-const client = new MMDynamo({
+const client = new DynamoDB({
   region: "us-east-2",
   accessKeyId: "",
   secretAccessKey: "",
@@ -38,16 +38,46 @@ const client = new MMDynamo({
 });
 ```
 
+### Initializing macrometa dynamodb
+
+```js
+import { DynamoDB } from "mmdynamo";
+
+const dcName = "test.macrometa.io";
+const host = "https://api-" + dcName;
+const apiKey = "xxxxxxxxxxxxxxxxxxxxxx";
+/*
+   If you have a JWT token
+   
+   const JWT = "xxxxxxxxxxxxxxxxxxxxxx";
+   */
+
+const service = "dynamodb";
+const region = "us-east-1";
+const endpoint = host + "/_api/dynamo";
+// secretAccessKey is a required parameter for aws-sdk we recommend you to pass "c8"
+const secretAccessKey = "c8";
+const accessKeyId = "apikey " + apiKey;
+/*
+   If you are using JWT token use the below instead
+   
+   const accessKeyId = "bearer " + JWT;
+   */
+
+const client = new DynamoDB({
+  region,
+  endpoint,
+  accessKeyId,
+  secretAccessKey,
+});
+```
+
 ### Create Table
 
 ```js
 client
-  .createTable({...})
-  .then(response => {
-    return response.json()
-  })
-  .then(data => {
-    console.log(data)
+  .createTable({...},(err,data)=>{
+    console.log(err,data)
   })
 ```
 
@@ -55,12 +85,8 @@ client
 
 ```js
 client
-  .describeTable({...})
-  .then(response => {
-    return response.json()
-  })
-  .then(data => {
-    console.log(data)
+  .describeTable({...},(err,data)=>{
+    console.log(err,data)
   })
 ```
 
@@ -68,12 +94,8 @@ client
 
 ```js
 client
-  .describeTimeToLive({...})
-  .then(response => {
-    return response.json()
-  })
-  .then(data => {
-    console.log(data)
+  .describeTimeToLive({...},(err,data)=>{
+    console.log(err,data)
   })
 ```
 
@@ -89,12 +111,8 @@ client.listTables().then((res) => {
 
 ```js
 client
-  .putItem({...})
-  .then(response => {
-    return response.json()
-  })
-  .then(data => {
-    console.log(data)
+  .putItem({...},(err,data)=>{
+    console.log(err,data)
   })
 ```
 
@@ -102,12 +120,8 @@ client
 
 ```js
 client
-  .getItem({...})
-  .then(response => {
-    return response.json()
-  })
-  .then(data => {
-    console.log(data)
+  .getItem({...},(err,data)=>{
+    console.log(err,data)
   })
 ```
 
@@ -115,12 +129,8 @@ client
 
 ```js
 client
-  .deleteItem({...})
-  .then(response => {
-    return response.json()
-  })
-  .then(data => {
-    console.log(data)
+  .deleteItem({...},(err,data)=>{
+    console.log(err,data)
   })
 ```
 
@@ -128,12 +138,8 @@ client
 
 ```js
 client
-  .deleteTable({...})
-  .then(response => {
-    return response.json()
-  })
-  .then(data => {
-    console.log(data)
+  .deleteTable({...},(err,data)=>{
+    console.log(err,data)
   })
 ```
 
@@ -141,12 +147,8 @@ client
 
 ```js
 client
-  .createGlobalTable({...})
-  .then(response => {
-    return response.json()
-  })
-  .then(data => {
-    console.log(data)
+  .createGlobalTable({...},(err,data)=>{
+    console.log(err,data)
   })
 ```
 
@@ -154,24 +156,17 @@ client
 
 ```js
 client
-  .createGlobalTable({...})
-  .then(response => {
-    return response.json()
-  })
-  .then(data => {
-    console.log(data)
+  .createGlobalTable({...},(err,data)=>{
+    console.log(err,data)
   })
 ```
 
 ### List Global Tables -
 
 ```js
-client
-  .listGlobalTables()
-  .then((response) => {
-    return response.json();
-  })
-  .then((data) => {
-    console.log(data);
-  });
+client.listGlobalTables({}, (err, data) => {
+  console.log(err, data);
+});
 ```
+
+mmDynamo uses DynamoDB low level APIs For more reference read [API Reference.](https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_Operations_Amazon_DynamoDB.html)
