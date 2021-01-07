@@ -40,8 +40,8 @@ const client = new Client({
 ### Create Table
 
 ```js
-  const response = await client.createTable();
-  console.log(response);
+const response = await client.createTable();
+console.log(response);
 ```
 
 
@@ -51,38 +51,38 @@ const client = new Client({
 ### List Tables
 
 ```js
-  const response = await client.listTables();
-  console.log(response);
+const response = await client.listTables();
+console.log(response);
 ```
 
 ### Put Item
 
 ```js
-  const response = await client.putItem({...});
-  console.log(response);
+const response = await client.putItem({...});
+console.log(response);
 ```
 
 ### Get Item
 
 ```js
-  const response = await client.getItem({...});
-  console.log(response);
+const response = await client.getItem({...});
+console.log(response);
 ```
 
 ### Delete Item
 
 ```js
-  const response = await client.deleteItem({...});
-  console.log(response);
+const response = await client.deleteItem({...});
+console.log(response);
 ```
 
 ### Delete Table
 
 ```js
-  const response = await client.deleteTable({...});
-  console.log(response);
+const response = await client.deleteTable({...});
+console.log(response);
 ```
 
 
 
- For payload reference read [API Reference.](https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_Operations_Amazon_DynamoDB.html)
+For payload reference read [API Reference.](https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_Operations_Amazon_DynamoDB.html)
