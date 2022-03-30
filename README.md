@@ -30,10 +30,10 @@ https://unpkg.com/mmdynamo@0.2.0/dist/mmdynamo.cjs.js
 import Client from "mmdynamo";
 
 const client = new Client({
-  agent : "fetch",
-  apiKey : "xxxx",
-  federationUrl : "http://xxx.xxx.macrometa.io",
-  absoluetPath : true // this is an optional parameter to be passed when you want to use the endpoint as it is
+  agent: "fetch",
+  apiKey: "xxxx",
+  federationURL: "http://xxx.xxx.macrometa.io",
+  absolutePath: true, // this is an optional parameter to be passed when you want to use the endpoint as it is
 });
 ```
 
@@ -43,10 +43,6 @@ const client = new Client({
 const response = await client.createTable();
 console.log(response);
 ```
-
-
-
-
 
 ### List Tables
 
@@ -82,7 +78,5 @@ console.log(response);
 const response = await client.deleteTable({...});
 console.log(response);
 ```
-
-
 
 For payload reference read [API Reference.](https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_Operations_Amazon_DynamoDB.html)
